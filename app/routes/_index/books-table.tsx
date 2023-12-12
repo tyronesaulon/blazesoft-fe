@@ -1,5 +1,5 @@
-import type { TableColumn } from "~/shared/Table/Table";
-import { Table } from "~/shared/Table/Table";
+import type { TableColumn } from "~/shared/components/Table/Table";
+import { Table } from "~/shared/components/Table/Table";
 import type { Book } from "~/domains/books/models/book.interface";
 import { ActionIcon, Anchor, Container, Menu } from "@mantine/core";
 import { IconDots, IconEdit, IconTrash } from "@tabler/icons-react";
