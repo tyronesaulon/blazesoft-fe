@@ -2,6 +2,7 @@ import {
   Button,
   Modal,
   NumberInput,
+  Select,
   Stack,
   Textarea,
   TextInput,
@@ -9,18 +10,35 @@ import {
 import { IconCurrencyDollar } from "@tabler/icons-react";
 import type { Book } from "~/domains/books/models/book.interface";
 import { bookSchema } from "~/domains/books/models/book.interface";
-import type { z } from "zod";
+import { z } from "zod";
 import { useForm, zodResolver } from "@mantine/form";
 import { useEffect, useState } from "react";
+import { BookCategory } from "~/domains/books/models/book-categories.enum";
 
-export const bookFormSchema = bookSchema.omit({ id: true });
+const getLengthErrorMessage = (min: number, max: number) =>
+  `Must be between ${min} and ${max}`;
+
+export const bookFormSchema = bookSchema.omit({ id: true }).extend({
+  name: z
+    .string()
+    .min(1, { message: getLengthErrorMessage(1, 250) })
+    .max(250, { message: getLengthErrorMessage(1, 250) }),
+  description: z
+    .string()
+    .min(1, { message: getLengthErrorMessage(1, 1000) })
+    .max(1000, { message: getLengthErrorMessage(1, 1000) }),
+  price: z.number().nonnegative().max(Number.MAX_SAFE_INTEGER),
+});
+
 export type BookForm = z.infer<typeof bookFormSchema>;
 const INITIAL_VALUE: BookForm = {
   name: "",
   description: "",
-  category: "",
+  category: BookCategory.Western,
   price: 0,
 };
+
+const BOOK_CATEGORIES = Object.values(BookCategory);
 
 export interface BookEditorProps {
   opened: boolean;
@@ -78,7 +96,11 @@ export function BookEditor({
             label="Description"
             {...form.getInputProps("description")}
           />
-          <TextInput label="Category" {...form.getInputProps("category")} />
+          <Select
+            label="Category"
+            data={BOOK_CATEGORIES}
+            {...form.getInputProps("category")}
+          />
           <NumberInput
             leftSection={<IconCurrencyDollar size={16} />}
             label="Price"
