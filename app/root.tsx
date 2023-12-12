@@ -32,7 +32,7 @@ export default function App() {
       </head>
       <body>
         <MantineProvider>
-          <TypographyStylesProvider>
+          <TypographyStylesProvider p={0}>
             <Outlet />
             <ScrollRestoration />
             <Scripts />
