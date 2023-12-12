@@ -42,7 +42,7 @@ const BOOK_CATEGORIES = Object.values(BookCategory);
 
 export interface BookEditorProps {
   opened: boolean;
-  onClose: (book?: Book) => void;
+  onClose: (book?: Book | BookForm) => void;
   value?: Book;
 }
 
@@ -57,19 +57,17 @@ export function BookEditor({
     validate: zodResolver(bookFormSchema),
   });
 
-  const onClose = (book?: Book) => {
+  const onClose = (book?: Book | BookForm) => {
     controlledOnClose(book);
     form.reset();
     setInitialized(false);
   };
 
   const submit = (book: BookForm) => {
-    const changes = bookSchema.parse({
+    onClose({
       id: value?.id,
       ...book,
     });
-
-    onClose(changes);
   };
 
   useEffect(() => {
