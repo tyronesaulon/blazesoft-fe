@@ -4,27 +4,20 @@ import { AppShell } from "@mantine/core";
 import { Header, HEADER_HEIGHT } from "~/core/Header/Header";
 import { useState } from "react";
 import type { Book } from "~/domains/books/models/book.interface";
-import { faker } from "@faker-js/faker";
 import { useLoaderData } from "@remix-run/react";
 import BooksTable from "~/routes/_index/books-table";
 import { useDisclosure } from "@mantine/hooks";
 import { BookEditor } from "~/routes/_index/book-editor";
+import { MOCK_BOOKS } from "~/routes/_index/mocks";
 
 const APPSHELL_PADDING_TOP = HEADER_HEIGHT + 24;
-const INITIAL_BOOKS: Book[] = Array.from({ length: 10 }).map(() => ({
-  id: faker.string.uuid(),
-  name: faker.lorem.words(),
-  description: faker.lorem.paragraph(),
-  category: faker.lorem.word(),
-  price: faker.number.int({ min: 1, max: 300 }),
-}));
 
 export const meta: MetaFunction = () => {
   return [{ title: "Blazesoft Frontend Assessment" }];
 };
 
 export async function loader() {
-  return json({ books: INITIAL_BOOKS });
+  return json({ books: MOCK_BOOKS });
 }
 
 export default function Index() {
