@@ -1,7 +1,8 @@
 import type { TableColumn } from "~/shared/Table/Table";
 import { Table } from "~/shared/Table/Table";
 import type { Book } from "~/domains/books/models/book.interface";
-import { Button, Container } from "@mantine/core";
+import { ActionIcon, Container, Menu } from "@mantine/core";
+import { IconDots, IconEdit, IconTrash } from "@tabler/icons-react";
 
 export interface BooksProps {
   books: Book[];
@@ -19,17 +20,28 @@ export default function BooksTable({ books, onDelete, onUpdate }: BooksProps) {
       name: "",
       cell: (row: Book) => {
         return (
-          <div>
-            <Button size="xs" onClick={() => onDelete(row)}>
-              Delete
-            </Button>
-            <Button
-              size="xs"
-              onClick={() => onUpdate({ ...row, name: "New Name" })}
-            >
-              Update
-            </Button>
-          </div>
+          <Menu>
+            <Menu.Target>
+              <ActionIcon variant="subtle">
+                <IconDots />
+              </ActionIcon>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item
+                leftSection={<IconEdit size={16} />}
+                onClick={() => onUpdate(row)}
+              >
+                Edit
+              </Menu.Item>
+              <Menu.Item
+                leftSection={<IconTrash size={16} />}
+                color="red"
+                onClick={() => onDelete(row)}
+              >
+                Delete
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         );
       },
     },
