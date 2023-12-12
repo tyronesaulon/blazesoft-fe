@@ -19,10 +19,7 @@ const INITIAL_BOOKS: Book[] = Array.from({ length: 10 }).map(() => ({
 }));
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return [{ title: "Blazesoft Frontend Assessment" }];
 };
 
 export async function loader() {
