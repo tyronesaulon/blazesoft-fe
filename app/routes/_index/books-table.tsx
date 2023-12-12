@@ -1,7 +1,7 @@
 import type { TableColumn } from "~/shared/components/Table/Table";
 import { Table } from "~/shared/components/Table/Table";
 import type { Book } from "~/domains/books/models/book.interface";
-import { ActionIcon, Anchor, Container, Menu } from "@mantine/core";
+import { ActionIcon, Anchor, Menu } from "@mantine/core";
 import { IconDots, IconEdit, IconTrash } from "@tabler/icons-react";
 
 export interface BooksProps {
@@ -58,9 +58,5 @@ export default function BooksTable({ books, onSelect, onDelete }: BooksProps) {
     },
   ];
 
-  return (
-    <Container size="md">
-      <Table<Book> columns={columns} data={books} />
-    </Container>
-  );
+  return <Table<Book> columns={columns} data={books} />;
 }
