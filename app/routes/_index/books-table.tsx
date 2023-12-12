@@ -10,6 +10,9 @@ export interface BooksProps {
   onDelete: (book: Book) => void;
 }
 
+function getPriceLabel(price: number): string {
+  return price ? `$${price}` : "";
+}
 export default function BooksTable({ books, onSelect, onDelete }: BooksProps) {
   const columns: TableColumn<Book>[] = [
     {
@@ -20,7 +23,10 @@ export default function BooksTable({ books, onSelect, onDelete }: BooksProps) {
     },
     { name: "Description", cell: (row: Book) => <div>{row.description}</div> },
     { name: "Category", cell: (row: Book) => <div>{row.category}</div> },
-    { name: "Price", cell: (row: Book) => <div>{row.price}</div> },
+    {
+      name: "Price",
+      cell: (row: Book) => <div>{getPriceLabel(row.price)}</div>,
+    },
     {
       name: "",
       cell: (row: Book) => {
