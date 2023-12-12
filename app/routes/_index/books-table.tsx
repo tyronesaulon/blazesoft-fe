@@ -1,18 +1,23 @@
 import type { TableColumn } from "~/shared/Table/Table";
 import { Table } from "~/shared/Table/Table";
 import type { Book } from "~/domains/books/models/book.interface";
-import { ActionIcon, Container, Menu } from "@mantine/core";
+import { ActionIcon, Anchor, Container, Menu } from "@mantine/core";
 import { IconDots, IconEdit, IconTrash } from "@tabler/icons-react";
 
 export interface BooksProps {
   books: Book[];
+  onSelect: (book: Book) => void;
   onDelete: (book: Book) => void;
-  onUpdate: (book: Book) => void;
 }
 
-export default function BooksTable({ books, onDelete, onUpdate }: BooksProps) {
+export default function BooksTable({ books, onSelect, onDelete }: BooksProps) {
   const columns: TableColumn<Book>[] = [
-    { name: "Title", cell: (row: Book) => <div>{row.name}</div> },
+    {
+      name: "Title",
+      cell: (row: Book) => (
+        <Anchor onClick={() => onSelect(row)}>{row.name}</Anchor>
+      ),
+    },
     { name: "Description", cell: (row: Book) => <div>{row.description}</div> },
     { name: "Category", cell: (row: Book) => <div>{row.category}</div> },
     { name: "Price", cell: (row: Book) => <div>{row.price}</div> },
@@ -29,7 +34,7 @@ export default function BooksTable({ books, onDelete, onUpdate }: BooksProps) {
             <Menu.Dropdown>
               <Menu.Item
                 leftSection={<IconEdit size={16} />}
-                onClick={() => onUpdate(row)}
+                onClick={() => onSelect(row)}
               >
                 Edit
               </Menu.Item>
